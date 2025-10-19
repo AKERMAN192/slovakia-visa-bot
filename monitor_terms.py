@@ -10,6 +10,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import requests
 
+def fetch_page_source(url):
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+    return response.text
+
 load_dotenv()
 
 # Налаштування з .env
