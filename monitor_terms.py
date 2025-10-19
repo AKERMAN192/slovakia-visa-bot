@@ -48,7 +48,6 @@ def save_state(state):
 
 # Парсинг сторінки (через Selenium)
 def fetch_page_source(url):
-    chrome_options = Options()
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
