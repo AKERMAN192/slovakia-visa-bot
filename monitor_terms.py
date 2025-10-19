@@ -48,23 +48,10 @@ def save_state(state):
 
 # Парсинг сторінки (через Selenium)
 def fetch_page_source(url):
-    chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+    return response.text
 
-    from selenium.webdriver.chrome.service import Service
-    service = Service(r"D:\driverchrome\chromedriver.exe")
-
-
-
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    try:
-        print("Loading page...", url)
-        driver.get(url)
-        time.sleep(2)
-        return driver.page_source
-    finally:
-        driver.quit()
 
 
 # Видобування елементів
