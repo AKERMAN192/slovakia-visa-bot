@@ -60,7 +60,7 @@ def fetch_page_source(url):
             "Chrome/122.0.0.0 Safari/537.36"
         )
     }
-    for attempt in range(3):  # 3 спроби
+    for attempt in range(3):
         try:
             response = requests.get(url, timeout=15, headers=headers, verify=False)
             response.raise_for_status()
@@ -68,7 +68,11 @@ def fetch_page_source(url):
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt + 1} failed: {e}")
             time.sleep(3)
+
+    # якщо всі 3 спроби не вдалися — повідом у Telegram
+    send_telegram_message("⚠️ Сайт portal.minv.sk не відповідає після 3 спроб. Можливо, він недоступний.")
     raise Exception("Failed to fetch page after 3 attempts")
+
 
 
 
