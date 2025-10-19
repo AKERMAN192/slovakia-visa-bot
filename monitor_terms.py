@@ -7,6 +7,11 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import requests
+import warnings
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+warnings.simplefilter('ignore', InsecureRequestWarning)
+
+
 
 def fetch_page_source(url):
     response = requests.get(url, timeout=10)
@@ -48,9 +53,22 @@ def save_state(state):
 
 # Парсинг сторінки (через Selenium)
 def fetch_page_source(url):
-    response = requests.get(url, timeout=10, verify=False)
-    response.raise_for_status()
-    return response.text
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/122.0.0.0 Safari/537.36"
+        )
+    }
+    for attempt in range(3):  # 3 спроби
+        try:
+            response = requests.get(url, timeout=15, headers=headers, verify=False)
+            response.raise_for_status()
+            return response.text
+        except requests.exceptions.RequestException as e:
+            print(f"Attempt {attempt + 1} failed: {e}")
+            time.sleep(3)
+    raise Exception("Failed to fetch page after 3 attempts")
 
 
 
