@@ -48,9 +48,10 @@ def save_state(state):
 
 # Парсинг сторінки (через Selenium)
 def fetch_page_source(url):
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=10, verify=False)
     response.raise_for_status()
     return response.text
+
 
 
 
