@@ -6,8 +6,6 @@ from pathlib import Path
 from datetime import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import requests
 
 def fetch_page_source(url):
